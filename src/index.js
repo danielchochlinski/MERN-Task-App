@@ -61,7 +61,6 @@ app.get("/tasks", (req, res) => {
   Task.find({})
     .then((tasks) => {
       res.send(tasks);
-      console.log(tasks);
     })
     .catch((err) => {
       res.status(500).send();
@@ -77,7 +76,9 @@ app.get("/tasks/:id", (req, res) => {
       }
       res.send(task);
     })
-    .catch((err) => {});
+    .catch((err) => {
+      res.status(500).send()
+    });
 });
 
 app.listen(port, () => {
