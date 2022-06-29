@@ -50,12 +50,29 @@ const userSchema = new mongoose.Schema({
     },
   ],
 });
+
+userSchema.virtual("tasks", {
+  ref: "Task",
+  localField: "_id",
+  foreignField: "owner",
+});
+
+userSchema.methods.toJSON = function () {
+  const user = this;
+  const userObject = user.toObject();
+
+  delete userObject.password;
+  delete userObject.tokens;
+  return userObject;
+};
+
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
   const token = jwt.sign({ _id: user._id.toString() }, "daniel");
 
   user.tokens = user.tokens.concat({ token });
   await user.save();
+
   return token;
 };
 
@@ -67,13 +84,15 @@ userSchema.statics.findByCredentials = async (email, password) => {
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
+
   if (!isMatch) {
     throw new Error("Unable to login");
   }
+
   return user;
 };
 
-//hash plain text password before saving
+// Hash the plain text password before saving
 userSchema.pre("save", async function (next) {
   const user = this;
 
