@@ -1,0 +1,10 @@
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 2rem 0 0 0;
+}
+
+.nav div {
+  cursor: pointer;
+}
