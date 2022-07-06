@@ -8,6 +8,7 @@ App should be running on development server.<br />
 <br/>
 
 To test the backend use postman.<br/>
+https://app.getpostman.com/join-team?invite_code=c15dd1203ec77ae21c7b8250c3c8a8ac <br />
 Please note frontend is not yet completed
 
 
